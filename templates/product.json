@@ -100,10 +100,10 @@
         "padding_bottom": 28
       }
     },
-    "product_ingredients_CiNeTC": {
+    "product_ingredients_9mpHYL": {
       "type": "product-ingredients",
       "settings": {
-        "title": "Key Ingredients",
+        "title": "Ingredients",
         "heading_size": "h1",
         "description": "",
         "padding_top": 36,
@@ -114,6 +114,6 @@
   "order": [
     "main",
     "related-products",
-    "product_ingredients_CiNeTC"
+    "product_ingredients_9mpHYL"
   ]
 }
