@@ -30,10 +30,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./src/scss/sections/_collection-tabs.scss":
-/*!*************************************************!*\
-  !*** ./src/scss/sections/_collection-tabs.scss ***!
-  \*************************************************/
+/***/ "./src/scss/sections/collection-tabs.scss":
+/*!************************************************!*\
+  !*** ./src/scss/sections/collection-tabs.scss ***!
+  \************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -183,7 +183,7 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
 /******/ 	__webpack_require__.O(undefined, ["assets/collection-tabs","assets/kickstart"], () => (__webpack_require__("./src/js/kickstartjs.js")))
 /******/ 	__webpack_require__.O(undefined, ["assets/collection-tabs","assets/kickstart"], () => (__webpack_require__("./src/scss/kickstart.scss")))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["assets/collection-tabs","assets/kickstart"], () => (__webpack_require__("./src/scss/sections/_collection-tabs.scss")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["assets/collection-tabs","assets/kickstart"], () => (__webpack_require__("./src/scss/sections/collection-tabs.scss")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()
