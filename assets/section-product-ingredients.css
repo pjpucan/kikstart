@@ -1,0 +1,97 @@
+.product-ingredients {
+  margin: 3rem auto;
+}
+.product-ingredients__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+@media screen and (max-width: 749px) {
+  .product-ingredients__grid {
+    grid-template-columns: 1fr;
+  }
+}
+.product-ingredients__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+  padding: 2rem;
+  background: rgb(var(--color-background));
+  border-radius: var(--card-corner-radius);
+  box-shadow: var(--card-shadow);
+  transition: box-shadow var(--duration-short) ease;
+}
+.product-ingredients__item:hover {
+  box-shadow: var(--card-shadow-hover);
+}
+.product-ingredients__media, .product-ingredients__modal-media {
+  width: 15rem;
+  height: 15rem;
+  margin-bottom: 2rem;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.product-ingredients__media img, .product-ingredients__modal-media img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  transition: transform var(--duration-long) ease;
+}
+.product-ingredients__item:hover .product-ingredients__media img {
+  transform: scale(1.1);
+}
+.product-ingredients__modal-media {
+  width: 20rem;
+  height: 20rem;
+  margin: 3rem auto;
+}
+@media screen and (max-width: 749px) {
+  .product-ingredients__modal-media {
+    width: 15rem;
+    height: 15rem;
+    margin: 2rem auto;
+  }
+}
+.product-ingredients__title {
+  margin: 0 0 1rem;
+  text-transform: uppercase;
+  font-size: calc(var(--font-heading-scale) * 1.6rem);
+}
+.product-ingredients__text {
+  margin: 0 0 2rem;
+  font-size: 1.4rem;
+  line-height: 1.6;
+}
+.product-ingredients__button {
+  margin-top: auto;
+  min-width: 12rem;
+}
+.product-ingredients__modal-content {
+  padding: 0 3rem 3rem;
+  text-align: center;
+}
+@media screen and (max-width: 749px) {
+  .product-ingredients__modal-content {
+    padding: 0 2rem 2rem;
+  }
+}
+.product-ingredients__modal-title {
+  margin: 0 0 2rem;
+  text-transform: uppercase;
+  font-size: calc(var(--font-heading-scale) * 2.4rem);
+  text-align: center;
+}
+.product-ingredients__modal-text {
+  margin: 0 0 2rem;
+  font-size: 1.6rem;
+  line-height: 1.6;
+}
+.product-ingredients__modal-text:last-child {
+  margin-bottom: 0;
+}
