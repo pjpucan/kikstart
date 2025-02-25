@@ -2,40 +2,139 @@
 {{ 'component-modal.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
+  .section-{{ section.id }} {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+
   .section-{{ section.id }} .product-ingredients__grid {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
   }
 
   @media screen and (min-width: 750px) {
     .section-{{ section.id }} .product-ingredients__grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(2, 1fr);
+      gap: 3rem;
     }
   }
 
   @media screen and (min-width: 990px) {
     .section-{{ section.id }} .product-ingredients__grid {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(4, 1fr);
     }
   }
 
+  .section-{{ section.id }} .product-ingredients__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+    padding: 2rem;
+    background: rgb(var(--color-background));
+    border-radius: var(--card-corner-radius);
+    box-shadow: var(--card-shadow);
+    transition: box-shadow var(--duration-short) ease;
+  }
+
+  .section-{{ section.id }} .product-ingredients__item:hover {
+    box-shadow: var(--card-shadow-hover);
+  }
+
   .section-{{ section.id }} .product-ingredients__media {
+    width: 15rem;
+    height: 15rem;
+    margin-bottom: 2rem;
     border-radius: 50%;
     overflow: hidden;
-    aspect-ratio: 1;
   }
 
   .section-{{ section.id }} .product-ingredients__media img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform var(--duration-long) ease;
+  }
+
+  .section-{{ section.id }} .product-ingredients__item:hover .product-ingredients__media img {
+    transform: scale(1.1);
+  }
+
+  .section-{{ section.id }} .product-ingredients__title {
+    margin: 0 0 1rem;
+    text-transform: uppercase;
+    font-size: calc(var(--font-heading-scale) * 1.6rem);
+  }
+
+  .section-{{ section.id }} .product-ingredients__text {
+    margin: 0 0 2rem;
+    font-size: 1.4rem;
+    line-height: 1.6;
+  }
+
+  .section-{{ section.id }} .product-ingredients__button {
+    margin-top: auto;
+    min-width: 12rem;
+  }
+
+  .section-{{ section.id }} .product-ingredients__modal-media {
+    margin: -3rem -3rem 3rem;
+    border-radius: var(--popup-corner-radius) var(--popup-corner-radius) 0 0;
+    overflow: hidden;
+  }
+
+  @media screen and (max-width: 749px) {
+    .section-{{ section.id }} .product-ingredients__modal-media {
+      margin: -2rem -2rem 2rem;
+    }
+  }
+
+  .section-{{ section.id }} .product-ingredients__modal-media img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+  }
+
+  .section-{{ section.id }} .product-ingredients__modal-content {
+    padding: 0 3rem 3rem;
+  }
+
+  @media screen and (max-width: 749px) {
+    .section-{{ section.id }} .product-ingredients__modal-content {
+      padding: 0 2rem 2rem;
+    }
+  }
+
+  .section-{{ section.id }} .product-ingredients__modal-title {
+    margin: 0 0 2rem;
+    text-transform: uppercase;
+    font-size: calc(var(--font-heading-scale) * 2.4rem);
+    text-align: center;
+  }
+
+  .section-{{ section.id }} .product-ingredients__modal-text {
+    margin: 0 0 2rem;
+    font-size: 1.6rem;
+    line-height: 1.6;
+  }
+
+  .section-{{ section.id }} .product-ingredients__modal-text:last-child {
+    margin-bottom: 0;
   }
 {%- endstyle -%}
 
-<div class="product-ingredients page-width">
+<div class="product-ingredients page-width section-{{ section.id }}">
   {%- assign ingredients = product.metaobjects.product_ingredient -%}
   
   {%- if ingredients != blank -%}
-    <ul class="product-ingredients__grid grid">
+    <ul class="product-ingredients__grid">
       {%- for ingredient in ingredients -%}
         {%- if ingredient.enable.value == true -%}
           <li class="grid__item">
@@ -58,7 +157,7 @@
 
               <div class="product-ingredients__content">
                 <h3 class="product-ingredients__title h4">
-                  {{ ingredient.display_name.value | default: ingredient.name.value }}
+                  {{ ingredient.display_name.value | default: ingredient.name.value | upcase }}
                 </h3>
                 
                 {%- if ingredient.brief_description.value != blank -%}
@@ -113,7 +212,7 @@
                         
                         <div class="product-ingredients__modal-content">
                           <h2 class="product-ingredients__modal-title h3">
-                            {{ ingredient.display_name.value | default: ingredient.name.value }}
+                            {{ ingredient.display_name.value | default: ingredient.name.value | upcase }}
                           </h2>
                           
                           {%- if ingredient.main_description.value != blank -%}
