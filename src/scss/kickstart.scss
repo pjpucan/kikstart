@@ -7,13 +7,10 @@
 //@use 'common/fonts';
 //@use "util/functions";
 
-// Base (Buttons, Headings etc
-@use "base/_base";
 
 // Global Styles
 @use 'common/global';
 
-// Header
+// Partials
 @use "partials/header";
 @use "partials/footer";
-
