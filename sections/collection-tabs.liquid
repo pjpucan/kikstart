@@ -1,0 +1,174 @@
+{{ 'collection-tabs.css' | asset_url | stylesheet_tag }}
+{{ 'collection-tabs.js' | asset_url | script_tag }}
+{{ 'component-collection-hero.css' | asset_url | stylesheet_tag }}
+
+<collection-tabs class="collection-tabs {% if section.settings.padding_top != blank %} padding-top-{{ section.settings.padding_top }}{% endif %}{% if section.settings.padding_bottom != blank %} padding-bottom-{{ section.settings.padding_bottom }}{% endif %}" data-section="{{ section.id }}">
+  <div class="page-width">
+    {%- if section.blocks.size > 0 -%}
+      <div class="collection-hero color-{{ section.settings.color_scheme }} gradient">
+        <div class="collection-hero__inner page-width">
+          <div class="collection-hero__text-wrapper">
+            <h1 class="collection-hero__title">
+              <span class="visually-hidden">{{ 'sections.collection_template.title' | t }}: </span>
+              {{- collection.title | escape -}}
+            </h1>
+
+            {%- if section.settings.show_collection_description and collection.description != blank -%}
+              <div class="collection-hero__description rte">{{ collection.description }}</div>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+
+      <div class="collection-tabs__header">
+        <div class="collection-tabs__nav" role="tablist">
+          {%- for block in section.blocks -%}
+            {%- if block.settings.collection != blank -%}
+              <button
+                class="collection-tabs__tab{% if forloop.first %} is-active{% endif %}"
+                role="tab"
+                aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+                data-collection-handle="{{ block.settings.collection.handle }}"
+                {{ block.shopify_attributes }}
+              >
+                {{ block.settings.title | default: block.settings.collection.title }}
+              </button>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+
+        <div class="collection-tabs__select">
+          <select class="collection-tabs__select-input" aria-label="{{ 'general.accessibility.collection_selector' | t }}">
+            {%- for block in section.blocks -%}
+              {%- if block.settings.collection != blank -%}
+                <option
+                  value="{{ block.settings.collection.handle }}"
+                  {% if forloop.first %}selected{% endif %}
+                  {{ block.shopify_attributes }}
+                >
+                  {{ block.settings.title | default: block.settings.collection.title }}
+                </option>
+              {%- endif -%}
+            {%- endfor -%}
+          </select>
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</collection-tabs>
+
+{% schema %}
+{
+  "name": "Collection Tabs",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "options": [
+        {
+          "value": "accent-1",
+          "label": "t:sections.all.colors.accent_1.label"
+        },
+        {
+          "value": "accent-2",
+          "label": "t:sections.all.colors.accent_2.label"
+        },
+        {
+          "value": "background-1",
+          "label": "t:sections.all.colors.background_1.label"
+        },
+        {
+          "value": "background-2",
+          "label": "t:sections.all.colors.background_2.label"
+        },
+        {
+          "value": "inverse",
+          "label": "t:sections.all.colors.inverse.label"
+        }
+      ],
+      "default": "background-1",
+      "label": "t:sections.all.colors.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_collection_description",
+      "default": true,
+      "label": "t:sections.main-collection-banner.settings.show_collection_description.label"
+    },
+    {
+      "type": "select",
+      "id": "padding_top",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:sections.all.padding.padding_top.none"
+        },
+        {
+          "value": "small",
+          "label": "t:sections.all.padding.padding_top.small"
+        },
+        {
+          "value": "medium",
+          "label": "t:sections.all.padding.padding_top.medium"
+        },
+        {
+          "value": "large",
+          "label": "t:sections.all.padding.padding_top.large"
+        }
+      ],
+      "default": "medium",
+      "label": "t:sections.all.padding.padding_top.label"
+    },
+    {
+      "type": "select",
+      "id": "padding_bottom",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:sections.all.padding.padding_bottom.none"
+        },
+        {
+          "value": "small",
+          "label": "t:sections.all.padding.padding_bottom.small"
+        },
+        {
+          "value": "medium",
+          "label": "t:sections.all.padding.padding_bottom.medium"
+        },
+        {
+          "value": "large",
+          "label": "t:sections.all.padding.padding_bottom.large"
+        }
+      ],
+      "default": "medium",
+      "label": "t:sections.all.padding.padding_bottom.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Tab Title",
+          "info": "Optional. If left blank, collection title will be used."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Tabs"
+    }
+  ]
+}
+{% endschema %}
