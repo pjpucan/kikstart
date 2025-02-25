@@ -1,0 +1,199 @@
+{{ 'section-product-ingredients.css' | asset_url | stylesheet_tag }}
+{{ 'component-modal.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+{%- liquid
+  assign ingredients_metafield = product.metafields.custom.product_ingredients
+  if ingredients_metafield != blank
+    assign ingredients_handles = ingredients_metafield.value | split: ','
+  endif
+-%}
+
+<div class="product-ingredients page-width section-{{ section.id }}-padding">
+  {%- if section.settings.title != blank -%}
+    <h2 class="product-ingredients__heading {{ section.settings.heading_size }}">
+      {{ section.settings.title | escape }}
+    </h2>
+  {%- endif -%}
+
+  {%- if section.settings.description != blank -%}
+    <div class="product-ingredients__description rte">
+      {{ section.settings.description }}
+    </div>
+  {%- endif -%}
+
+  {%- if ingredients_handles != blank -%}
+    <ul class="product-ingredients__grid grid grid--1-col grid--2-col-tablet grid--3-col-desktop">
+      {%- for handle in ingredients_handles -%}
+        {%- assign ingredient = handle | strip | handle | append: '.product_ingredient' | metaobject_definition -%}
+        <li class="grid__item">
+          <div class="product-ingredients__item">
+            {%- if ingredient.image.value != blank -%}
+              <div class="product-ingredients__media">
+                <img
+                  srcset="{{ ingredient.image.value | image_url: width: 165 }} 165w,
+                          {{ ingredient.image.value | image_url: width: 360 }} 360w,
+                          {{ ingredient.image.value | image_url: width: 535 }} 535w"
+                  src="{{ ingredient.image.value | image_url: width: 360 }}"
+                  sizes="(min-width: 990px) 535px, (min-width: 750px) 360px, 165px"
+                  alt="{{ ingredient.display_name.value | default: ingredient.name.value | escape }}"
+                  width="{{ ingredient.image.value.width }}"
+                  height="{{ ingredient.image.value.height }}"
+                  loading="lazy"
+                >
+              </div>
+            {%- endif -%}
+
+            <div class="product-ingredients__content">
+              <h3 class="product-ingredients__title h4">
+                {{ ingredient.display_name.value | default: ingredient.name.value }}
+              </h3>
+              
+              {%- if ingredient.brief_description.value != blank -%}
+                <div class="product-ingredients__text rte">
+                  {{ ingredient.brief_description.value }}
+                </div>
+              {%- endif -%}
+
+              {%- if ingredient.learn_more.value != blank -%}
+                <button
+                  type="button"
+                  class="product-ingredients__button button button--tertiary"
+                  aria-haspopup="dialog"
+                  data-modal-opener="Ingredient-{{ ingredient.id }}"
+                >
+                  {{ 'products.product.learn_more' | t }}
+                </button>
+
+                <modal-dialog
+                  id="Ingredient-{{ ingredient.id }}"
+                  class="product-ingredients__modal modal"
+                >
+                  <div
+                    role="dialog"
+                    aria-modal="true"
+                    class="modal__content"
+                    tabindex="-1"
+                  >
+                    <button
+                      type="button"
+                      class="modal__close-button link"
+                      aria-label="{{ 'accessibility.close' | t }}"
+                    >
+                      {% render 'icon-close' %}
+                    </button>
+                    <div class="modal__content-info">
+                      {%- if ingredient.image.value != blank -%}
+                        <div class="product-ingredients__modal-media">
+                          <img
+                            srcset="{{ ingredient.image.value | image_url: width: 550 }} 550w,
+                                    {{ ingredient.image.value | image_url: width: 720 }} 720w,
+                                    {{ ingredient.image.value | image_url: width: 990 }} 990w"
+                            src="{{ ingredient.image.value | image_url: width: 550 }}"
+                            sizes="(min-width: 990px) 990px, (min-width: 750px) 720px, 550px"
+                            alt="{{ ingredient.display_name.value | default: ingredient.name.value | escape }}"
+                            width="{{ ingredient.image.value.width }}"
+                            height="{{ ingredient.image.value.height }}"
+                            loading="lazy"
+                          >
+                        </div>
+                      {%- endif -%}
+                      
+                      <div class="product-ingredients__modal-content">
+                        <h2 class="product-ingredients__modal-title h3">
+                          {{ ingredient.display_name.value | default: ingredient.name.value }}
+                        </h2>
+                        <div class="product-ingredients__modal-text rte">
+                          {{ ingredient.learn_more.value }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </modal-dialog>
+              {%- endif -%}
+            </div>
+          </div>
+        </li>
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Product Ingredients",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:sections.main-product.blocks.complementary_products.settings.heading.label",
+      "default": "Ingredients"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_size.options__1.label"
+        },
+        {
+          "value": "h1",
+          "label": "t:sections.all.heading_size.options__2.label"
+        },
+        {
+          "value": "h0",
+          "label": "t:sections.all.heading_size.options__3.label"
+        }
+      ],
+      "default": "h1",
+      "label": "t:sections.all.heading_size.label"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "t:sections.image-banner.blocks.text.name"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top.label",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom.label",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Ingredients"
+    }
+  ]
+}
+{% endschema %}
