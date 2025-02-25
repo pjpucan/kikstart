@@ -1,6 +1,6 @@
 # Kickstart Ecom
 
-This is a Shopify Theme for Exam for Kickstart Ecom
+This is a Shopify Theme Exam for Kickstart Ecom
 
 
 ## Prerequisite:
