@@ -48,7 +48,7 @@
                             {{ ingredient.image.value | image_url: width: 535 }} 535w"
                     src="{{ ingredient.image.value | image_url: width: 360 }}"
                     sizes="(min-width: 990px) 535px, (min-width: 750px) 360px, 165px"
-                    alt="{{ ingredient.title.value | escape }}"
+                    alt="{{ ingredient.display_name.value | default: ingredient.name.value | escape }}"
                     width="{{ ingredient.image.value.width }}"
                     height="{{ ingredient.image.value.height }}"
                     loading="lazy"
@@ -58,16 +58,16 @@
 
               <div class="product-ingredients__content">
                 <h3 class="product-ingredients__title h4">
-                  {{ ingredient.title.value }}
+                  {{ ingredient.display_name.value | default: ingredient.name.value }}
                 </h3>
                 
-                {%- if ingredient.rich_text.value != blank -%}
+                {%- if ingredient.brief_description.value != blank -%}
                   <div class="product-ingredients__text rte">
-                    {{ ingredient.rich_text.value }}
+                    {{ ingredient.brief_description.value }}
                   </div>
                 {%- endif -%}
 
-                {%- if ingredient.learn_more.value != blank -%}
+                {%- if ingredient.main_description.value != blank or ingredient.other_info.value != blank -%}
                   <button
                     type="button"
                     class="product-ingredients__button button button--tertiary"
@@ -103,7 +103,7 @@
                                       {{ ingredient.image.value | image_url: width: 990 }} 990w"
                               src="{{ ingredient.image.value | image_url: width: 550 }}"
                               sizes="(min-width: 990px) 990px, (min-width: 750px) 720px, 550px"
-                              alt="{{ ingredient.title.value | escape }}"
+                              alt="{{ ingredient.display_name.value | default: ingredient.name.value | escape }}"
                               width="{{ ingredient.image.value.width }}"
                               height="{{ ingredient.image.value.height }}"
                               loading="lazy"
@@ -113,11 +113,20 @@
                         
                         <div class="product-ingredients__modal-content">
                           <h2 class="product-ingredients__modal-title h3">
-                            {{ ingredient.title.value }}
+                            {{ ingredient.display_name.value | default: ingredient.name.value }}
                           </h2>
-                          <div class="product-ingredients__modal-text rte">
-                            {{ ingredient.learn_more.value }}
-                          </div>
+                          
+                          {%- if ingredient.main_description.value != blank -%}
+                            <div class="product-ingredients__modal-text rte">
+                              {{ ingredient.main_description.value }}
+                            </div>
+                          {%- endif -%}
+
+                          {%- if ingredient.other_info.value != blank -%}
+                            <div class="product-ingredients__modal-text rte">
+                              {{ ingredient.other_info.value }}
+                            </div>
+                          {%- endif -%}
                         </div>
                       </div>
                     </div>
