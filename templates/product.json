@@ -102,26 +102,7 @@
     },
     "product_ingredients_9mpHYL": {
       "type": "product-ingredients",
-      "blocks": {
-        "ingredient_KB9WxJ": {
-          "type": "ingredient",
-          "source": "{{ product.metafields.custom.product_ingredients.value }}",
-          "settings": {
-            "title": "{{ product.metafields.custom.product_ingredients.value.display_name.value }}",
-            "image": "{{ product.metafields.custom.product_ingredients.value.image.value }}",
-            "rich_text": "{{ product.metafields.custom.product_ingredients.value.brief_description | metafield_tag }}",
-            "button_label": "{{ product.metafields.custom.product_ingredients.value.name.value }}",
-            "button_link": ""
-          }
-        }
-      },
-      "block_order": [
-        "ingredient_KB9WxJ"
-      ],
-      "settings": {
-        "main_title": "Ingredients",
-        "heading_size": "h1"
-      }
+      "settings": {}
     }
   },
   "order": [
