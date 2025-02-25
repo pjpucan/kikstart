@@ -1,37 +1,14 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "collection_tabs_BBXxTg": {
-      "type": "collection-tabs",
-      "blocks": {
-        "collection_dYGqhy": {
-          "type": "collection",
-          "settings": {
-            "collection": "all"
-          }
-        },
-        "collection_c4xRQ4": {
-          "type": "collection",
-          "settings": {
-            "collection": "accessories"
-          }
-        },
-        "collection_7LwUci": {
-          "type": "collection",
-          "settings": {
-            "collection": "best-seller"
-          }
-        }
-      },
-      "block_order": [
-        "collection_dYGqhy",
-        "collection_c4xRQ4",
-        "collection_7LwUci"
-      ],
-      "settings": {
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
     "banner": {
       "type": "main-collection-banner",
       "settings": {
@@ -59,11 +36,48 @@
         "padding_top": 36,
         "padding_bottom": 36
       }
+    },
+    "collection_tabs_AL6XTQ": {
+      "type": "collection-tabs",
+      "blocks": {
+        "collection_iKTmJw": {
+          "type": "collection",
+          "settings": {
+            "collection": "all",
+            "title": ""
+          }
+        },
+        "collection_L8fTwy": {
+          "type": "collection",
+          "settings": {
+            "collection": "best-sellers",
+            "title": ""
+          }
+        },
+        "collection_NT3WWz": {
+          "type": "collection",
+          "settings": {
+            "collection": "accessories",
+            "title": ""
+          }
+        }
+      },
+      "block_order": [
+        "collection_iKTmJw",
+        "collection_L8fTwy",
+        "collection_NT3WWz"
+      ],
+      "settings": {
+        "color_scheme": "background-1",
+        "show_collection_description": true,
+        "padding_top": "medium",
+        "padding_bottom": "medium"
+      }
     }
   },
   "order": [
-    "collection_tabs_BBXxTg",
     "banner",
-    "product-grid"
+    "product-grid",
+    "collection_tabs_AL6XTQ"
   ]
 }
