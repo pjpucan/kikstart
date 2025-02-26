@@ -13,7 +13,7 @@
     "theme": "shopify theme dev --store iskroo --theme-editor-sync",
     "watch": "npx mix watch -- --watch-options-poll=1000",
     "webpack:build": "npx mix --production",
-    "dev": "concurrently \"npm run theme\" \"npm run watch\"",
+    "dev": "npx mix",
     "hot": "npx mix watch --hot",
     "prod": "npx mix --production"
   },
