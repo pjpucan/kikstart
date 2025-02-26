@@ -296,3 +296,4 @@ if (document.readyState === 'loading') {
 }
 /******/ })()
 ;
+//# sourceMappingURL=collection-tabs.js.map

@@ -7,11 +7,11 @@
 }
 .collection-tabs__nav {
   display: none;
-  gap: 2rem;
 }
-@media screen and (min-width: 750px) {
+@media (min-width: 768px) {
   .collection-tabs__nav {
     display: flex;
+    gap: 2rem;
   }
 }
 .collection-tabs__tab {
@@ -20,7 +20,7 @@
   border-bottom: 2px solid transparent;
   color: rgba(var(--color-foreground), 0.75);
   cursor: pointer;
-  font-size: 1.6rem;
+  font-size: 1.25rem;
   margin-bottom: -1px;
   padding: 1rem 0;
   text-align: center;
@@ -37,7 +37,7 @@
   margin: 0 auto;
   display: block;
 }
-@media screen and (min-width: 750px) {
+@media (min-width: 768px) {
   .collection-tabs__select {
     display: none;
   }
@@ -51,16 +51,17 @@
   border-radius: 0;
   color: rgb(var(--color-foreground));
   cursor: pointer;
-  font-size: 1.6rem;
+  font-size: 1rem;
   line-height: 1.5;
   margin: 0;
-  min-height: 4.5rem;
+  min-height: 2.8125rem;
   min-width: calc(100% - 4rem);
   padding: 0 1.5rem;
   width: 100%;
 }
 .collection-tabs .collection-hero__inner {
   padding: 0;
+  margin-top: 2rem;
   margin-bottom: 2rem;
 }
 .collection-tabs .collection-hero__title {
@@ -68,13 +69,15 @@
   font-size: calc(var(--font-heading-scale) * 2.4rem);
   text-transform: uppercase;
 }
-@media screen and (min-width: 750px) {
+@media (min-width: 768px) {
   .collection-tabs .collection-hero__title {
     font-size: calc(var(--font-heading-scale) * 3rem);
   }
 }
 .collection-tabs .collection-hero__description {
   margin: 1.5rem 0 0;
-  font-size: 1.6rem;
+  font-size: 1rem;
   line-height: 1.5;
 }
+
+/*# sourceMappingURL=collection-tabs.css.map*/

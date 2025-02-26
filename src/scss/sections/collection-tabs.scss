@@ -1,17 +1,20 @@
+@import "../util/px-to-rem";
+@import "../mixins/breakpoints";
+
 .collection-tabs {
-  margin-top: 3rem;
-  margin-bottom: 2rem;
+  margin-top: toRem(48px);
+  margin-bottom: toRem(32px);
 
   .collection-hero {
-    margin-bottom: 3rem;
+    margin-bottom: toRem(48px);
   }
 
   &__nav {
     display: none;
-    gap: 2rem;
-
-    @media screen and (min-width: 750px) {
+    
+    @include media-breakpoint-up(md) {
       display: flex;
+      gap: toRem(32px);
     }
   }
 
@@ -21,9 +24,9 @@
     border-bottom: 2px solid transparent;
     color: rgba(var(--color-foreground), 0.75);
     cursor: pointer;
-    font-size: 1.6rem;
+    font-size: toRem(20px);
     margin-bottom: -1px;
-    padding: 1rem 0;
+    padding: toRem(16px) 0;
     text-align: center;
     text-transform: uppercase;
     transition: all var(--duration-default) ease;
@@ -40,8 +43,8 @@
     max-width: 80%;
     margin: 0 auto;
     display: block;
-
-    @media screen and (min-width: 750px) {
+    
+    @include media-breakpoint-up(md) {
       display: none;
     }
   }
@@ -53,19 +56,20 @@
     border-radius: 0;
     color: rgb(var(--color-foreground));
     cursor: pointer;
-    font-size: 1.6rem;
+    font-size: toRem(16px);
     line-height: 1.5;
     margin: 0;
-    min-height: 4.5rem;
-    min-width: calc(100% - 4rem);
-    padding: 0 1.5rem;
+    min-height: toRem(45px);
+    min-width: calc(100% - toRem(64px));
+    padding: 0 toRem(24px);
     width: 100%;
   }
 
   .collection-hero {
     &__inner {
       padding: 0;
-      margin-bottom: 2rem;
+      margin-top: toRem(32px);
+      margin-bottom: toRem(32px);
     }
 
     &__title {
@@ -73,14 +77,14 @@
       font-size: calc(var(--font-heading-scale) * 2.4rem);
       text-transform: uppercase;
       
-      @media screen and (min-width: 750px) {
+      @include media-breakpoint-up(md) {
         font-size: calc(var(--font-heading-scale) * 3rem);
       }
     }
 
     &__description {
-      margin: 1.5rem 0 0;
-      font-size: 1.6rem;
+      margin: toRem(24px) 0 0;
+      font-size: toRem(16px);
       line-height: 1.5;
     }
   }

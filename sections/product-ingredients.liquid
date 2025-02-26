@@ -1,147 +1,27 @@
-{%- style -%}
-  .section-{{ section.id }} {
-    padding-top: 3rem;
-    padding-bottom: 3rem;
-  }
-
-  .section-{{ section.id }} .product-ingredients__grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  @media screen and (min-width: 750px) {
-    .section-{{ section.id }} .product-ingredients__grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 3rem;
-    }
-  }
-
-  @media screen and (min-width: 990px) {
-    .section-{{ section.id }} .product-ingredients__grid {
-      grid-template-columns: repeat(4, 1fr);
-    }
-  }
-
-  .section-{{ section.id }} .product-ingredients__item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    height: 100%;
-    padding: 2rem;
-    background: rgb(var(--color-background));
-    border-radius: var(--card-corner-radius);
-    box-shadow: var(--card-shadow);
-    transition: box-shadow var(--duration-short) ease;
-  }
-
-  .section-{{ section.id }} .product-ingredients__item:hover {
-    box-shadow: var(--card-shadow-hover);
-  }
-
-  .section-{{ section.id }} .product-ingredients__media,
-  .section-{{ section.id }} .product-ingredients__modal-media {
-    width: 15rem;
-    height: 15rem;
-    margin-bottom: 2rem;
-    border-radius: 50%;
-    overflow: hidden;
-  }
-
-  .section-{{ section.id }} .product-ingredients__modal-media {
-    width: 20rem;
-    height: 20rem;
-    margin: 3rem auto;
-  }
-
-  .section-{{ section.id }} .product-ingredients__media img,
-  .section-{{ section.id }} .product-ingredients__modal-media img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform var(--duration-long) ease;
-  }
-
-  .section-{{ section.id }} .product-ingredients__item:hover .product-ingredients__media img {
-    transform: scale(1.1);
-  }
-
-  .section-{{ section.id }} .product-ingredients__title {
-    margin: 0 0 1rem;
-    text-transform: uppercase;
-    font-size: calc(var(--font-heading-scale) * 1.6rem);
-  }
-
-  .section-{{ section.id }} .product-ingredients__text {
-    margin: 0 0 2rem;
-    font-size: 1.4rem;
-    line-height: 1.6;
-  }
-
-  .section-{{ section.id }} .product-ingredients__button {
-    margin-top: auto;
-    min-width: 12rem;
-  }
-
-  .section-{{ section.id }} .product-ingredients__modal-content {
-    padding: 0 3rem 3rem;
-    text-align: center;
-  }
-
-  @media screen and (max-width: 749px) {
-    .section-{{ section.id }} .product-ingredients__modal-content {
-      padding: 0 2rem 2rem;
-    }
-
-    .section-{{ section.id }} .product-ingredients__modal-media {
-      width: 15rem;
-      height: 15rem;
-      margin: 2rem auto;
-    }
-  }
-
-  .section-{{ section.id }} .product-ingredients__modal-title {
-    margin: 0 0 2rem;
-    text-transform: uppercase;
-    font-size: calc(var(--font-heading-scale) * 2.4rem);
-    text-align: center;
-  }
-
-  .section-{{ section.id }} .product-ingredients__modal-text {
-    margin: 0 0 2rem;
-    font-size: 1.6rem;
-    line-height: 1.6;
-  }
-
-  .section-{{ section.id }} .product-ingredients__modal-text:last-child {
-    margin-bottom: 0;
-  }
-{%- endstyle -%}
+{{ 'section-product-ingredients.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'modal-ingredients.js' | asset_url }}" defer="defer"></script>
 
 <div class="product-ingredients page-width section-{{ section.id }}">
-  {%- assign ingredients = product.metaobjects.product_ingredient -%}
+  {%- assign ingredients = product.metafields.custom.product_ingredient.value -%}
   
   {%- if ingredients != blank -%}
+
+    <h2 class="main-title h2">Key Ingredients</h2>
+
     <ul class="product-ingredients__grid">
       {%- for ingredient in ingredients -%}
-        {%- if ingredient.enable.value == true -%}
+        {%- if ingredient.enable == true -%}
           <li class="grid__item">
             <div class="product-ingredients__item">
-              {%- if ingredient.image.value != blank -%}
+              {%- if ingredient.image != blank -%}
                 <div class="product-ingredients__media">
                   <img
-                    srcset="{{ ingredient.image.value | image_url: width: 165 }} 165w,
-                            {{ ingredient.image.value | image_url: width: 360 }} 360w,
-                            {{ ingredient.image.value | image_url: width: 535 }} 535w"
-                    src="{{ ingredient.image.value | image_url: width: 360 }}"
+                    srcset="{{ ingredient.image | image_url: width: 165 }} 165w,
+                            {{ ingredient.image | image_url: width: 360 }} 360w,
+                            {{ ingredient.image | image_url: width: 535 }} 535w"
+                    src="{{ ingredient.image | image_url: width: 360 }}"
                     sizes="(min-width: 990px) 535px, (min-width: 750px) 360px, 165px"
-                    alt="{{ ingredient.display_name.value | default: ingredient.name.value | escape }}"
-                    width="{{ ingredient.image.value.width }}"
-                    height="{{ ingredient.image.value.height }}"
+                    alt="{{ ingredient.name | escape }}"
                     loading="lazy"
                   >
                 </div>
@@ -149,72 +29,84 @@
 
               <div class="product-ingredients__content">
                 <h3 class="product-ingredients__title h4">
-                  {{ ingredient.display_name.value | default: ingredient.name.value | upcase }}
+                  {{ ingredient.name | upcase }}
                 </h3>
                 
-                {%- if ingredient.brief_description.value != blank -%}
-                  <div class="product-ingredients__text rte">
-                    {{ ingredient.brief_description.value }}
+                {%- if ingredient.brief_description != blank -%}
+                  <div class="product-ingredients__text">
+                    {{ ingredient.brief_description | metafield_tag }}
                   </div>
                 {%- endif -%}
 
-                {%- if ingredient.main_description.value != blank or ingredient.other_info.value != blank -%}
+                {%- if ingredient.main_description != blank or ingredient.other_info != blank -%}
                   <button
                     type="button"
                     class="product-ingredients__button button button--tertiary"
                     aria-haspopup="dialog"
-                    data-modal-opener="Ingredient-{{ ingredient.id }}"
+                    data-modal-opener="Ingredient-{{ forloop.index }}"
                   >
-                    {{ 'products.product.learn_more' | t }}
+                    {{ 'products.product.learn_more' | t | default: 'Learn More' }}
                   </button>
 
-                  <details
-                    id="Ingredient-{{ ingredient.id }}"
-                    class="product-ingredients__modal"
+                  <div
+                    id="Ingredient-{{ forloop.index }}"
+                    class="product-ingredients__modal modal"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="ModalTitle-{{ forloop.index }}"
                   >
-                    <summary
-                      class="product-ingredients__modal-summary"
-                      role="button"
-                      aria-label="{{ 'products.product.learn_more' | t }}"
-                    >
-                      {{ 'products.product.learn_more' | t }}
-                    </summary>
-                    <div class="product-ingredients__modal-content">
-                      {%- if ingredient.image.value != blank -%}
-                        <div class="product-ingredients__modal-media">
-                          <img
-                            srcset="{{ ingredient.image.value | image_url: width: 550 }} 550w,
-                                    {{ ingredient.image.value | image_url: width: 720 }} 720w,
-                                    {{ ingredient.image.value | image_url: width: 990 }} 990w"
-                            src="{{ ingredient.image.value | image_url: width: 550 }}"
-                            sizes="(min-width: 990px) 990px, (min-width: 750px) 720px, 550px"
-                            alt="{{ ingredient.display_name.value | default: ingredient.name.value | escape }}"
-                            width="{{ ingredient.image.value.width }}"
-                            height="{{ ingredient.image.value.height }}"
-                            loading="lazy"
-                          >
-                        </div>
-                      {%- endif -%}
-                      
-                      <div class="product-ingredients__modal-content-info">
-                        <h2 class="product-ingredients__modal-title h3">
-                          {{ ingredient.display_name.value | default: ingredient.name.value | upcase }}
-                        </h2>
-                        
-                        {%- if ingredient.main_description.value != blank -%}
-                          <div class="product-ingredients__modal-text rte">
-                            {{ ingredient.main_description.value }}
-                          </div>
-                        {%- endif -%}
+                    <div class="modal__content">
+                      <button
+                        type="button"
+                        class="modal__close-button"
+                        aria-label="{{ 'accessibility.close' | t }}"
+                        data-modal-close
+                      >
+                        {% render 'icon-close' %}
+                      </button>
 
-                        {%- if ingredient.other_info.value != blank -%}
-                          <div class="product-ingredients__modal-text rte">
-                            {{ ingredient.other_info.value }}
-                          </div>
-                        {%- endif -%}
+                      <div class="modal__content-info">
+                        <div class="modal__content-media">
+                          {%- if ingredient.image != blank -%}
+                            <div class="featured-image">
+                              <img
+                                srcset="{{ ingredient.image | image_url: width: 550 }} 550w,
+                                        {{ ingredient.image | image_url: width: 720 }} 720w,
+                                        {{ ingredient.image | image_url: width: 990 }} 990w"
+                                src="{{ ingredient.image | image_url: width: 550 }}"
+                                sizes="(min-width: 990px) 990px, (min-width: 750px) 720px, 550px"
+                                alt="{{ ingredient.name | escape }}"
+                                loading="lazy"
+                              >
+                            </div>
+                          {%- endif -%}
+
+                          <div class="title-info">
+                            {%- if ingredient.name != blank -%}
+                            <h2 id="ModalTitle-{{ forloop.index }}" class="product-ingredients__modal-title h3">
+                              {{ ingredient.name | upcase }}
+                            </h2>
+                            {%- endif -%}
+                            
+                            {%- if ingredient.other_info != blank -%}
+                              <div class="modal-info rte">
+                                {{ ingredient.other_info | metafield_tag }}
+                              </div>
+                            {%- endif -%}
+                          </div> <!-- title-info -->
+                        </div> <!-- modal-media -->
+                        
+                        <div class="product-ingredients__modal-content">
+                          {%- if ingredient.main_description != blank -%}
+                            <p class="product-ingredients__modal-description rte">
+                              {{ ingredient.main_description | metafield_tag }}
+                            </p>
+                          {%- endif -%}
+                    
+                        </div>
                       </div>
                     </div>
-                  </details>
+                  </div>
                 {%- endif -%}
               </div>
             </div>

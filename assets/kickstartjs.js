@@ -17,19 +17,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 /***/ }),
 
-/***/ "./src/scss/components/modal-ingredients.scss":
-/*!****************************************************!*\
-  !*** ./src/scss/components/modal-ingredients.scss ***!
-  \****************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
 /***/ "./src/scss/kickstart.scss":
 /*!*********************************!*\
   !*** ./src/scss/kickstart.scss ***!
@@ -157,7 +144,6 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 		var installedChunks = {
 /******/ 			"/assets/kickstartjs": 0,
 /******/ 			"assets/section-product-ingredients": 0,
-/******/ 			"assets/modal-ingredients": 0,
 /******/ 			"assets/collection-tabs": 0,
 /******/ 			"assets/kickstart": 0
 /******/ 		};
@@ -209,12 +195,12 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	__webpack_require__.O(undefined, ["assets/section-product-ingredients","assets/modal-ingredients","assets/collection-tabs","assets/kickstart"], () => (__webpack_require__("./src/js/kickstartjs.js")))
-/******/ 	__webpack_require__.O(undefined, ["assets/section-product-ingredients","assets/modal-ingredients","assets/collection-tabs","assets/kickstart"], () => (__webpack_require__("./src/scss/kickstart.scss")))
-/******/ 	__webpack_require__.O(undefined, ["assets/section-product-ingredients","assets/modal-ingredients","assets/collection-tabs","assets/kickstart"], () => (__webpack_require__("./src/scss/sections/collection-tabs.scss")))
-/******/ 	__webpack_require__.O(undefined, ["assets/section-product-ingredients","assets/modal-ingredients","assets/collection-tabs","assets/kickstart"], () => (__webpack_require__("./src/scss/components/modal-ingredients.scss")))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["assets/section-product-ingredients","assets/modal-ingredients","assets/collection-tabs","assets/kickstart"], () => (__webpack_require__("./src/scss/sections/section-product-ingredients.scss")))
+/******/ 	__webpack_require__.O(undefined, ["assets/section-product-ingredients","assets/collection-tabs","assets/kickstart"], () => (__webpack_require__("./src/js/kickstartjs.js")))
+/******/ 	__webpack_require__.O(undefined, ["assets/section-product-ingredients","assets/collection-tabs","assets/kickstart"], () => (__webpack_require__("./src/scss/kickstart.scss")))
+/******/ 	__webpack_require__.O(undefined, ["assets/section-product-ingredients","assets/collection-tabs","assets/kickstart"], () => (__webpack_require__("./src/scss/sections/collection-tabs.scss")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["assets/section-product-ingredients","assets/collection-tabs","assets/kickstart"], () => (__webpack_require__("./src/scss/sections/section-product-ingredients.scss")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()
 ;
+//# sourceMappingURL=kickstartjs.js.map

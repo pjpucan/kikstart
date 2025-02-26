@@ -8,70 +8,94 @@ function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = 
 function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
-function _possibleConstructorReturn(t, e) { if (e && ("object" == _typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return _assertThisInitialized(t); }
-function _assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
-function _inherits(t, e) { if ("function" != typeof e && null !== e) throw new TypeError("Super expression must either be null or a function"); t.prototype = Object.create(e && e.prototype, { constructor: { value: t, writable: !0, configurable: !0 } }), Object.defineProperty(t, "prototype", { writable: !1 }), e && _setPrototypeOf(t, e); }
-function _wrapNativeSuper(t) { var r = "function" == typeof Map ? new Map() : void 0; return _wrapNativeSuper = function _wrapNativeSuper(t) { if (null === t || !_isNativeFunction(t)) return t; if ("function" != typeof t) throw new TypeError("Super expression must either be null or a function"); if (void 0 !== r) { if (r.has(t)) return r.get(t); r.set(t, Wrapper); } function Wrapper() { return _construct(t, arguments, _getPrototypeOf(this).constructor); } return Wrapper.prototype = Object.create(t.prototype, { constructor: { value: Wrapper, enumerable: !1, writable: !0, configurable: !0 } }), _setPrototypeOf(Wrapper, t); }, _wrapNativeSuper(t); }
-function _construct(t, e, r) { if (_isNativeReflectConstruct()) return Reflect.construct.apply(null, arguments); var o = [null]; o.push.apply(o, e); var p = new (t.bind.apply(t, o))(); return r && _setPrototypeOf(p, r.prototype), p; }
-function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
-function _isNativeFunction(t) { try { return -1 !== Function.toString.call(t).indexOf("[native code]"); } catch (n) { return "function" == typeof t; } }
-function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, _setPrototypeOf(t, e); }
-function _getPrototypeOf(t) { return _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function (t) { return t.__proto__ || Object.getPrototypeOf(t); }, _getPrototypeOf(t); }
-var ModalDialog = /*#__PURE__*/function (_HTMLElement) {
-  function ModalDialog() {
-    var _this$querySelector;
-    var _this;
-    _classCallCheck(this, ModalDialog);
-    _this = _callSuper(this, ModalDialog);
-    (_this$querySelector = _this.querySelector('[data-modal-close]')) === null || _this$querySelector === void 0 || _this$querySelector.addEventListener('click', _this.hide.bind(_this));
-    _this.addEventListener('keyup', function (event) {
-      if (event.code.toUpperCase() === 'ESCAPE') _this.hide();
-    });
-    if (_this.classList.contains('media-modal')) {
-      _this.addEventListener('pointerup', function (event) {
-        if (event.pointerType === 'mouse' && !event.target.closest('modal-content')) _this.hide();
+var ModalIngredients = /*#__PURE__*/function () {
+  function ModalIngredients() {
+    _classCallCheck(this, ModalIngredients);
+    this.init();
+  }
+  return _createClass(ModalIngredients, [{
+    key: "init",
+    value: function init() {
+      this.modalOpeners = document.querySelectorAll('[data-modal-opener]');
+      this.modalClosers = document.querySelectorAll('[data-modal-close]');
+      this.modals = document.querySelectorAll('.product-ingredients__modal');
+      this.body = document.querySelector('body');
+      this.bindEvents();
+    }
+  }, {
+    key: "bindEvents",
+    value: function bindEvents() {
+      var _this = this;
+      // Open modal
+      this.modalOpeners.forEach(function (opener) {
+        opener.addEventListener('click', function (e) {
+          e.preventDefault();
+          var modalId = opener.getAttribute('data-modal-opener');
+          _this.openModal(modalId);
+        });
+      });
+
+      // Close modal
+      this.modalClosers.forEach(function (closer) {
+        closer.addEventListener('click', function (e) {
+          e.preventDefault();
+          var modal = closer.closest('.product-ingredients__modal');
+          _this.closeModal(modal);
+        });
+      });
+
+      // Close on outside click
+      this.modals.forEach(function (modal) {
+        modal.addEventListener('click', function (e) {
+          if (e.target === modal) {
+            _this.closeModal(modal);
+          }
+        });
+      });
+
+      // Close on ESC key
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+          var activeModal = document.querySelector('.product-ingredients__modal.active');
+          if (activeModal) {
+            _this.closeModal(activeModal);
+          }
+        }
       });
     }
-    return _this;
-  }
-  _inherits(ModalDialog, _HTMLElement);
-  return _createClass(ModalDialog, [{
-    key: "connectedCallback",
-    value: function connectedCallback() {
-      if (this.moved) return;
-      this.moved = true;
-      document.body.appendChild(this);
+  }, {
+    key: "openModal",
+    value: function openModal(modalId) {
+      var modal = document.getElementById(modalId);
+      if (!modal) return;
+      this.body.style.overflow = 'hidden';
+      modal.classList.add('active');
+
+      // Set focus on close button
+      var closeButton = modal.querySelector('[data-modal-close]');
+      if (closeButton) {
+        closeButton.focus();
+      }
     }
   }, {
-    key: "show",
-    value: function show(opener) {
-      this.openedBy = opener;
-      this.setAttribute('open', '');
-      this.querySelector('[role="dialog"]').setAttribute('aria-modal', 'true');
-      document.body.classList.add('overflow-hidden');
-    }
-  }, {
-    key: "hide",
-    value: function hide() {
-      var _this$openedBy;
-      this.removeAttribute('open');
-      this.querySelector('[role="dialog"]').removeAttribute('aria-modal');
-      document.body.classList.remove('overflow-hidden');
-      (_this$openedBy = this.openedBy) === null || _this$openedBy === void 0 || _this$openedBy.focus();
+    key: "closeModal",
+    value: function closeModal(modal) {
+      if (!modal) return;
+      this.body.style.overflow = '';
+      modal.classList.remove('active');
+
+      // Return focus to opener
+      var modalId = modal.getAttribute('id');
+      var opener = document.querySelector("[data-modal-opener=\"".concat(modalId, "\"]"));
+      if (opener) {
+        opener.focus();
+      }
     }
   }]);
-}(/*#__PURE__*/_wrapNativeSuper(HTMLElement));
-customElements.define('modal-dialog', ModalDialog);
+}(); // Initialize on DOM ready
 document.addEventListener('DOMContentLoaded', function () {
-  var modalOpeners = document.querySelectorAll('[data-modal-opener]');
-  modalOpeners.forEach(function (button) {
-    button.addEventListener('click', function (e) {
-      var modalId = button.dataset.modalOpener;
-      var modal = document.getElementById(modalId);
-      if (modal) modal.show(button);
-    });
-  });
+  new ModalIngredients();
 });
 /******/ })()
 ;
+//# sourceMappingURL=modal-ingredients.js.map
