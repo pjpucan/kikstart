@@ -13,7 +13,7 @@
     "theme": "shopify theme dev --store iskroo --theme-editor-sync",
     "watch": "npx mix watch -- --watch-options-poll=1000",
     "webpack:build": "npx mix --production",
-    "dev": "npx mix",
+    "dev": "concurrently \"npm run theme\" \"npm run watch\"",
     "hot": "npx mix watch --hot",
     "prod": "npx mix --production"
   },
@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/pjpucan/skroo#readme",
   "devDependencies": {
+    "concurrently": "^9.1.2",
     "cross-env": "^7.0.3",
     "laravel-mix": "^6.0.49",
     "laravel-mix-purgecss": "^6.0.0",
